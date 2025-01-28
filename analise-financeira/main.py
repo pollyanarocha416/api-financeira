@@ -27,13 +27,13 @@ API_URL = f'https://brapi.dev/api/quote/PETR4?'
 ### Atualizaar a api pra q seja passado a acao e seja retornado as infos dessa acao em expecifico
 
 
-@app.get('/financeiro')
-async def get_dados():
+@app.get('/acao')
+async def get_acoes():
     headers = {'Authorization': f"Bearer {API_TOKEN}"}
     try:
         response = requests.get(API_URL, headers=headers)
         if response.status_code == 200:
-            return response.json()
+            return {"status": "success", f"ação {response.json().get('results')[0].get('shortName')}": response.json().get('results')[0]}
         else:
             raise HTTPException(status_code=response.status_code, detail=response.text)
     except Exception as e:
