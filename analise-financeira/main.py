@@ -31,10 +31,8 @@ API_URL = f'https://brapi.dev/api/quote/'
 async def get_acoes(acao: str):
     headers = {'Authorization': f"Bearer {API_TOKEN}"}
     try:
-        if not acao:
-            raise HTTPException(status_code=400, detail="Acao nao informada")
-        else:
-            response = requests.get(API_URL+acao, headers=headers)
+        
+        response = requests.get(API_URL+acao, headers=headers)
         
         
         if response.status_code == 200:
