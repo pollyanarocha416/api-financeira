@@ -19,7 +19,7 @@ app = FastAPI()
 
 
 API_TOKEN = 'jrfFdSF8RZ1scxbTk8baH7'
-API_URL = f'https://brapi.dev/api/quote/PETR4?'
+API_URL = f'https://brapi.dev/api/quote/'
 
 # https://brapi.dev/api/quote/{ticker}?token={seu_token}
 # Substitua {ticker} pelo símbolo da ação que você está interessado.
@@ -28,10 +28,15 @@ API_URL = f'https://brapi.dev/api/quote/PETR4?'
 
 
 @app.get('/acao')
-async def get_acoes():
+async def get_acoes(acao: str):
     headers = {'Authorization': f"Bearer {API_TOKEN}"}
     try:
-        response = requests.get(API_URL, headers=headers)
+        if not acao:
+            raise HTTPException(status_code=400, detail="Acao nao informada")
+        else:
+            response = requests.get(API_URL+acao, headers=headers)
+        
+        
         if response.status_code == 200:
             return {"status": "success", f"ação {response.json().get('results')[0].get('shortName')}": response.json().get('results')[0]}
         else:
