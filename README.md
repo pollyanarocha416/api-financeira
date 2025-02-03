@@ -1,2 +1,5 @@
 # readme:
-executar projeto:  uvicorn main:app --reload 
+executar projeto:  uvicorn main:app --reload
+
+
+# em desenvolvimento...
